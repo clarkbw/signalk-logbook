@@ -112,6 +112,22 @@ Configuration (plugin settings):
 * **Notification paths to ignore** — prefix matches to suppress known-noisy paths (e.g. `navigation.gnss`).
 * **Also log when a notification clears** — turn off for raise-only logging (default on).
 
+## Map tiles
+
+By default the map view loads tiles from [OpenStreetMap](https://www.openstreetmap.org).
+The OSM [tile usage policy](https://operations.osmfoundation.org/policies/tiles/) requires
+a valid referer, which some self-hosted setups (for example a Signal K server accessed via
+a LAN IP address) don't send, resulting in blocked (403) tiles.
+
+The tile source can be changed in plugin settings:
+
+* **Map tile URL template** — URL of the tile server, using `{z}` `{x}` `{y}` placeholders.
+  Optional placeholders: `{s}` rotates between the `a`, `b`, and `c` subdomains, and `{r}`
+  becomes `@2x` on high-DPI displays. This allows pointing the map to another public tile
+  provider or a private tile proxy.
+* **Map tile attribution** — attribution text shown in the map corner. When left empty the
+  default OpenStreetMap attribution is shown.
+
 ## API
 
 Other applications can also use the [logbook API](https://editor.swagger.io/?url=https://raw.githubusercontent.com/meri-imperiumi/signalk-logbook/main/schema/openapi.yaml) for retrieving and writing log entries. This can be useful for automations with [Node-Red](https://nodered.org) or [NoFlo](https://noflojs.org) etc.

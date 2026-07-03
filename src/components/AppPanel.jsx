@@ -33,6 +33,7 @@ function AppPanel(props) {
   const [addEntry, setAddEntry] = useState(null);
   const [needsUpdate, setNeedsUpdate] = useState(true);
   const [timezone, setTimezone] = useState('UTC');
+  const [mapTiles, setMapTiles] = useState({});
 
   const loginStatus = props.loginStatus.status;
 
@@ -91,6 +92,12 @@ function AppPanel(props) {
         }
         if (v.configuration.displayTimeZone) {
           setTimezone(v.configuration.displayTimeZone);
+        }
+        if (v.configuration.mapTileUrl || v.configuration.mapTileAttribution) {
+          setMapTiles({
+            url: v.configuration.mapTileUrl,
+            attribution: v.configuration.mapTileAttribution,
+          });
         }
       });
   }, [timezone]);
@@ -222,7 +229,7 @@ function AppPanel(props) {
               { activeTab === 'book' ? <Logbook entries={data.entries} displayTimeZone={timezone} editEntry={setEditEntry} addEntry={() => setAddEntry({ ago: 0, category: 'navigation' })} /> : null }
             </TabPane>
             <TabPane tabId="map">
-              { activeTab === 'map' ? <Map entries={data.entries} editEntry={setEditEntry} viewEntry={setViewEntry} /> : null }
+              { activeTab === 'map' ? <Map entries={data.entries} tileUrl={mapTiles.url} tileAttribution={mapTiles.attribution} editEntry={setEditEntry} viewEntry={setViewEntry} /> : null }
             </TabPane>
           </TabContent>
         </Col>

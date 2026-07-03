@@ -403,6 +403,16 @@ module.exports = (app) => {
         default: true,
         title: 'Also log when a notification clears',
       },
+      mapTileUrl: {
+        type: 'string',
+        default: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        title: 'Map tile URL template. Placeholders: {z} {x} {y}, optionally {s} for subdomain rotation (a-c) and {r} for retina "@2x"',
+      },
+      mapTileAttribution: {
+        type: 'string',
+        default: '',
+        title: 'Map tile attribution shown on the map. Leave empty for the default OpenStreetMap attribution',
+      },
     },
   };
 

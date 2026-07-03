@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+### Added
+- Map tile URL and attribution can now be configured in plugin settings, for example to use an alternative tile provider or a private tile proxy when OpenStreetMap tiles are blocked by their referer policy (#76)
+
 ## [0.9.2] - 2026-06-16
 ### Changed
 - `vhf` can now be submitted in POST requests

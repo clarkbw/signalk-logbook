@@ -3,6 +3,17 @@ import { Map as PigeonMap, GeoJson, Marker } from 'pigeon-maps';
 import { Point } from 'where';
 import { viewport } from '@mapbox/geo-viewport';
 
+const defaultTileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+function makeProvider(template) {
+  return (x, y, z, dpr) => template
+    .replace(/\{s\}/g, 'abc'[(x + y + z) % 3])
+    .replace(/\{z\}/g, z)
+    .replace(/\{x\}/g, x)
+    .replace(/\{y\}/g, y)
+    .replace(/\{r\}/g, dpr && dpr >= 2 ? '@2x' : '');
+}
+
 function calculateBounds(points) {
   if (!points.length) {
     return [0, 0, 0, 0];
@@ -122,6 +133,8 @@ function Map(props) {
     <PigeonMap
       center={centerAndZoom.center}
       zoom={centerAndZoom.zoom}
+      provider={makeProvider(props.tileUrl || defaultTileUrl)}
+      attribution={props.tileAttribution ? <span>{props.tileAttribution}</span> : undefined}
     >
       <GeoJson
         data={geoJson}
